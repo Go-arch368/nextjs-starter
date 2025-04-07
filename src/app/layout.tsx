@@ -1,9 +1,11 @@
+"use client";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "src/components/navbar";
 
+// Load Inter font using next/font for optimization
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
@@ -18,31 +20,24 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider
-  appearance={{
-    elements: {
-      headerSubtitle: "text-gray-900",
-      headerTitle: "text-gray-900",
-      dividerText: "text-gray-900",
-      card: "bg-white shadow-lg",
-      formButtonPrimary: "bg-green-700 hover:bg-green-800 text-white font-semibold",
-    },
-    variables: {
-      colorText: "#111827",       
-      colorPrimary: "#047857",    
-    },
-  }}
->
+      appearance={{
+        elements: {
+          headerSubtitle: "text-gray-900",
+          headerTitle: "text-gray-900",
+          dividerText: "text-gray-900",
+          card: "bg-white shadow-lg",
+          formButtonPrimary:
+            "bg-green-700 hover:bg-green-800 text-white font-semibold",
+        },
+        variables: {
+          colorText: "#111827",
+          colorPrimary: "#047857",
+        },
+      }}
+    >
       <html lang="en">
         <head>
-          <link
-            rel="preload"
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
-            as="style"
-          />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
-          />
+          {/* No need to manually preload or link the font if you're using next/font */}
         </head>
         <body className={inter.className}>
           <Navbar />

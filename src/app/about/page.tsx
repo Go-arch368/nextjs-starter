@@ -7,7 +7,7 @@ const About = () => {
 
   if (!isLoaded) {
     return (
-      <div className="flex items-center justify-center min-h-screen text-xl">
+      <div className="flex min-h-screen items-center justify-center text-xl">
         Loading...
       </div>
     );
@@ -15,14 +15,14 @@ const About = () => {
 
   if (!isSignedIn) {
     return (
-      <div className="flex items-center justify-center min-h-screen text-red-600 text-xl">
+      <div className="flex min-h-screen items-center justify-center text-xl text-red-600">
         Please sign in to view this page
       </div>
     );
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex min-h-screen items-center justify-center">
       <h1 className="text-3xl font-semibold text-indigo-700">
         Hello, {user.firstName}!
       </h1>
