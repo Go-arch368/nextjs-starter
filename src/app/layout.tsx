@@ -1,9 +1,7 @@
 import { type Metadata } from "next";
-import {ClerkProvider} from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import Navbar from "@/components/navbar";
-
-
 
 export const metadata: Metadata = {
   title: "Clerk Next.js Quickstart",
@@ -19,9 +17,9 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body>
-        <Navbar/>
-        {children}
-        </body> 
+          <Navbar />
+          {children}
+        </body>
       </html>
     </ClerkProvider>
   );
