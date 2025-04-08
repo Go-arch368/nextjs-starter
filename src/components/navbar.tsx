@@ -1,18 +1,19 @@
 "use client";
 
 import React from "react";
-
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const Navbar = () => (
   <nav className="my-6 flex items-center justify-between bg-white px-6 py-4 shadow-md">
-    Clerk-Template
+    <div className="text-xl font-semibold text-gray-900">Clerk Template</div>
+
     <ul className="hidden gap-6 text-base font-medium text-gray-700 md:flex">
-      <li>Home</li>
-      <li>About</li>
-      <li>Services</li>
-      <li>Contact</li>
+      <li className="transition hover:text-green-700">Home</li>
+      <li className="transition hover:text-green-700">About</li>
+      <li className="transition hover:text-green-700">Services</li>
+      <li className="transition hover:text-green-700">Contact</li>
     </ul>
+
     <div>
       <SignedOut>
         <SignInButton>
