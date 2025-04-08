@@ -6,12 +6,12 @@ import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const Navbar = () => (
   <nav className="my-6 flex items-center justify-between bg-white px-6 py-4 shadow-md">
-    {/* Logo or Brand Name */}
+   
     <Link href="/" className="text-2xl font-bold text-gray-800">
       Clerk-Template
     </Link>
 
-    {/* Navigation Links */}
+    
     <ul className="hidden gap-6 text-base font-medium text-gray-700 md:flex">
       <li>
         <Link href="/" className="transition hover:text-green-700">
@@ -35,7 +35,7 @@ const Navbar = () => (
       </li>
     </ul>
 
-    {/* Auth Buttons */}
+    
     <div>
       <SignedOut>
         <SignInButton>
