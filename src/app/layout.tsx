@@ -1,10 +1,12 @@
 // src/app/layout.tsx
 import { ClerkProvider } from "@clerk/nextjs";
 import { Inter } from "next/font/google";
-import type { Metadata } from "next";
-import "./globals.css";
 import { Providers } from "./providers";
+import { Metadata } from "next";
 import Categories from "./categories/page";
+import Home from "./page";
+import "./globals.css";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -12,11 +14,7 @@ export const metadata: Metadata = {
   description: "Demo app using Clerk authentication",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({}: { children: React.ReactNode }) {
   return (
     <ClerkProvider
       appearance={{
@@ -33,12 +31,14 @@ export default function RootLayout({
           colorPrimary: "#047857",
         },
       }}
+      signInUrl="/sign-in"
     >
       <html lang="en">
         <body className={inter.className}>
           <Providers>
             <Categories />
-            {children}
+            <Home />
+            {/* {children} */}
           </Providers>
         </body>
       </html>
