@@ -3,8 +3,8 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/navbar";
 import { Providers } from "./providers";
+import Categories from "./categories/page";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -37,9 +37,10 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <Providers>
-            <Navbar />
-            {children}
+          <Categories/>
+          {children}
           </Providers>
+        
         </body>
       </html>
     </ClerkProvider>

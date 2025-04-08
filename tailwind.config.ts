@@ -1,18 +1,33 @@
-// tailwind.config.js
-import {heroui} from "@heroui/react";
-
-/** @type {import('tailwindcss').Config} */
-const config = {
+/* eslint-disable */
+import type { Config } from "tailwindcss";
+const { heroui } = require("@heroui/react");
+const config: Config = {
   content: [
-    // ...
-    // make sure it's pointing to the ROOT node_module
-    "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}"
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@heroui/react/dist/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
+  debugScreens: {
+      position: ['bottom', 'left'],
+      selector: '.debug-screens',
+      style: {
+        backgroundColor: 'black',
+        color: 'white',
+      },
+    },
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+      },
+    },
   },
-  darkMode: "class",
-  plugins: [heroui()]
-}
-
+  plugins: [
+    require('tailwindcss-debug-screens'),
+    heroui()
+  ],
+};
 export default config;
