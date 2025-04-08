@@ -12,6 +12,10 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  timeout: 60000,
+  expect: {
+    timeout: 10000
+  },
   testDir: './e2e',
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -30,6 +34,9 @@ export default defineConfig({
 //storageState:"auth.json",
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    screenshot: 'only-on-failure',
+    viewport: { width: 1280, height: 720 },
+    storageState:"storageState.json",
   },
 
   /* Configure projects for major browsers */
