@@ -5,10 +5,10 @@ const Contact = () => (
     <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-md">
       <h2 className="mb-4 text-2xl font-bold text-indigo-600">Contact Us</h2>
       <p className="text-gray-700">
-         This is the contact page. Feel free to reach out!
+        This is the contact page. Feel free to reach out!
       </p>
     </div>
   </div>
 );
 
-export default Contact; 
+export default Contact;

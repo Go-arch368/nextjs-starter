@@ -37,10 +37,9 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <Providers>
-          <Categories/>
-          {children}
+            <Categories />
+            {children}
           </Providers>
-        
         </body>
       </html>
     </ClerkProvider>
