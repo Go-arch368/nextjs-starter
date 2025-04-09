@@ -22,7 +22,13 @@ export default function Navbar() {
     { name: "Home", href: "/" },
     {
       name: "Groceries",
-      dropdown: ["Fruits", "Vegetables", "Snacks"],
+      dropdown: [
+        "Dals and Pulses",
+        "Ghee and Oils",
+        "Atta and Flours",
+        "Masala and Spices",
+        "Rice and Rice products",
+      ],
     },
     {
       name: "Electronics",
@@ -30,11 +36,20 @@ export default function Navbar() {
     },
     {
       name: "Fashion",
-      dropdown: ["Men", "Women", "Kids"],
+      dropdown: ["Men Wester wear", "Womens western wear"],
     },
     {
       name: "Shop",
-      dropdown: ["Offers", "New Arrivals", "Gift Cards"],
+      nestedDropdown: {
+        Groceries: ["Rice", "Milk", "Eggs"],
+        Electronics: ["Mobile Phones", "Laptops", "Headphones"],
+        Fashion: ["T-Shirts", "Dresses", "Shoes"],
+      },
+    },
+    {
+      name: "About",
+      //dropdown: ["Offers", "New Arrivals", "Gift Cards"],
+      href: "/about",
     },
     {
       name: "Pages",
@@ -78,7 +93,10 @@ export default function Navbar() {
             <li
               key={item.name}
               className="relative"
-              onMouseEnter={() => item.dropdown && setHoveredMenu(item.name)}
+              onMouseEnter={() =>
+                (item.dropdown || item.nestedDropdown) &&
+                setHoveredMenu(item.name)
+              }
               onMouseLeave={() => setHoveredMenu(null)}
             >
               <Link
@@ -86,9 +104,12 @@ export default function Navbar() {
                 className="flex items-center gap-1 hover:text-green-700"
               >
                 {item.name}
-                {item.dropdown && <ChevronDown size={14} />}
+                {(item.dropdown || item.nestedDropdown) && (
+                  <ChevronDown size={14} />
+                )}
               </Link>
 
+              {/* Simple dropdown */}
               {item.dropdown && hoveredMenu === item.name && (
                 <ul className="absolute left-0 top-full z-50 mt-2 w-40 rounded-md border bg-white shadow-lg">
                   {item.dropdown.map((subItem) => (
@@ -102,6 +123,32 @@ export default function Navbar() {
                     </li>
                   ))}
                 </ul>
+              )}
+
+              {item.nestedDropdown && hoveredMenu === item.name && (
+                <div className="absolute left-0 top-full z-50 mt-2 flex w-[700px] rounded-md border bg-white p-4 shadow-lg">
+                  {Object.entries(item.nestedDropdown).map(
+                    ([category, subItems]) => (
+                      <div key={category} className="w-1/3 px-4">
+                        <div className="mb-2 text-base font-bold text-green-800">
+                          {category}
+                        </div>
+                        <ul className="space-y-1">
+                          {subItems.map((sub) => (
+                            <li key={sub}>
+                              <Link
+                                href="#"
+                                className="block rounded-md px-3 py-2 text-sm text-gray-700 transition-all hover:bg-green-100 hover:text-green-800"
+                              >
+                                {sub}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )
+                  )}
+                </div>
               )}
             </li>
           ))}
