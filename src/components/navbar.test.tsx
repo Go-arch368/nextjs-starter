@@ -1,47 +1,59 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 import Navbar from "./navbar";
-import { useClerk } from "@clerk/nextjs";
-import { ReactNode } from "react";
+import "@testing-library/jest-dom";
+import React, { ReactNode } from "react";
 
-// Mocking the `useClerk` hook and Clerk components
 jest.mock("@clerk/nextjs", () => ({
-  useClerk: jest.fn(),
   SignedIn: ({ children }: { children: ReactNode }) => <div>{children}</div>,
   SignedOut: ({ children }: { children: ReactNode }) => <div>{children}</div>,
   SignInButton: ({ children }: { children: ReactNode }) => (
-    <button>{children}</button>
+    <div>{children}</div>
   ),
-  UserButton: () => <button>User Button</button>,
+  UserButton: () => <div>UserButton</div>,
 }));
 
-describe("Navbar", () => {
-  test("should render Navbar with 'Clerk-Template' text", () => {
-    render(<Navbar />);
+jest.mock("next/navigation", () => ({
+  useRouter: () => ({
+    push: jest.fn(),
+    prefetch: jest.fn(),
+  }),
+}));
 
-    const linkElement = screen.getByText(/Clerk-Template/i);
-    expect(linkElement).toBeInTheDocument();
+beforeAll(() => {
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    value: jest.fn().mockImplementation((query) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    })),
+  });
+});
+
+describe("Navbar Component", () => {
+  it("renders Browse All Categories button", () => {
+    render(<Navbar />);
+    expect(
+      screen.getByRole("button", { name: /browse all categories/i })
+    ).toBeInTheDocument();
   });
 
-  test("should render the Home link", () => {
+  it("shows dropdown on Browse All Categories hover", async () => {
     render(<Navbar />);
+    const browseBtn = screen.getByRole("button", {
+      name: /browse all categories/i,
+    });
 
-    const homeLink = screen.getByText(/Home/i);
-    expect(homeLink).toBeInTheDocument();
-  });
+    act(() => {
+      fireEvent.mouseEnter(browseBtn);
+    });
 
-  test("should render the Sign In button when user is signed out", () => {
-    render(<Navbar />);
-
-    const signInButton = screen.getByText(/Sign In/i);
-    expect(signInButton).toBeInTheDocument();
-  });
-
-  test("should render the UserButton when user is signed in", () => {
-    (useClerk as jest.Mock).mockReturnValue({ user: { firstName: "John" } });
-
-    render(<Navbar />);
-
-    const userButton = screen.getByText(/User Button/i);
-    expect(userButton).toBeInTheDocument();
+    expect(await screen.findByText("Vegetables")).toBeInTheDocument();
+    expect(await screen.findByText("Dairy Products")).toBeInTheDocument();
   });
 });

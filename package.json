@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.13.0",
@@ -29,6 +30,9 @@
     "tailwindcss-debug-screens": "^2.2.1"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.26.9",
+    "@babel/preset-react": "^7.26.3",
+    "@babel/preset-typescript": "^7.27.0",
     "@playwright/test": "^1.51.1",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
@@ -38,6 +42,7 @@
     "@types/node": "^22.13.13",
     "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
+    "babel-jest": "^29.7.0",
     "classnames": "^2.5.1",
     "eslint": "^8",
     "eslint-config-next": "15.2.4",
@@ -50,6 +55,7 @@
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^3.4.17",
+    "ts-jest": "^29.3.1",
     "ts-node": "^10.9.2",
     "typescript": "5.7.3"
   },
