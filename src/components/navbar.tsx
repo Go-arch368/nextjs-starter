@@ -1,27 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-  useClerk,
-} from "@clerk/nextjs";
+import { useState } from "react";
+
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { ChevronDown, Headphones, Menu, X } from "lucide-react";
 import Link from "next/link";
 
 export default function Navbar() {
-  const router = useRouter();
-  const { isSignedIn } = useClerk();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-
-  useEffect(() => {
-    if (isSignedIn) {
-      router.push("/categories");
-    }
-  }, [isSignedIn, router]);
 
   const navItems = [
     "Home",

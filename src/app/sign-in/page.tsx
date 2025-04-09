@@ -1,7 +1,6 @@
-"use client";
-
-import { SignIn } from "@clerk/nextjs";
+// This page is a server component by default — so use AuthWrapper
+import AuthWrapper from "@/components/AuthWrapper";
 
 export default function SignInPage() {
-  return <SignIn redirectUrl="/categories" />;
+  return <AuthWrapper />;
 }
