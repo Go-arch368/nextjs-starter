@@ -1,15 +1,21 @@
 "use client";
 
-import { Navbar, NavbarContent, NavbarItem, Link, Button } from "@heroui/react";
-import { ChevronDown, Headphones } from "lucide-react";
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
-import { useClerk } from "@clerk/nextjs";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+  useClerk,
+} from "@clerk/nextjs";
+import { ChevronDown, Headphones, Menu, X } from "lucide-react";
+import Link from "next/link";
 
-export default function HomePage() {
-  const { isSignedIn } = useClerk();
+export default function Navbar() {
   const router = useRouter();
+  const { isSignedIn } = useClerk();
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   useEffect(() => {
     if (isSignedIn) {
@@ -17,89 +23,89 @@ export default function HomePage() {
     }
   }, [isSignedIn, router]);
 
+  const navItems = [
+    "Home",
+    "Groceries",
+    "Electronics",
+    "Fashion",
+    "About",
+    "Shop",
+    "Blog",
+    "Pages",
+    "Contact",
+  ];
+
   return (
-    <>
-      <div className="fixed left-0 top-0 z-50 w-full bg-white shadow-md">
-        <Navbar className="px-6 py-1">
-          <NavbarContent className="flex w-full items-center justify-between">
-            <div className="flex items-center">
-              <Button className="flex items-center gap-2 bg-green-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-green-700">
-                Browse All Categories
-                <ChevronDown size={16} />
-              </Button>
-            </div>
-
-            <div className="flex gap-6 text-sm font-medium text-gray-800">
-              <NavbarItem>
-                <Link href="#">Home</Link>
-              </NavbarItem>
-              <NavbarItem>
-                <Link href="#">Groceries</Link>
-              </NavbarItem>
-              <NavbarItem>
-                <Link href="#">Electronics</Link>
-              </NavbarItem>
-              <NavbarItem>
-                <Link href="#">Fashion</Link>
-              </NavbarItem>
-              <NavbarItem>
-                <Link href="#">About</Link>
-              </NavbarItem>
-              <NavbarItem>
-                <Link href="#">Shop</Link>
-              </NavbarItem>
-              <NavbarItem>
-                <Link href="#">Blog</Link>
-              </NavbarItem>
-              <NavbarItem>
-                <Link href="#">Pages</Link>
-              </NavbarItem>
-              <NavbarItem>
-                <Link href="#">Contact</Link>
-              </NavbarItem>
-            </div>
-
-            <div className="ml-auto flex items-center gap-6">
-              <div className="flex items-center gap-2 font-semibold text-green-600">
-                <Headphones size={20} />
-                <div className="text-right leading-tight">
-                  <div className="text-sm">1900 - 888</div>
-                  <div className="text-xs font-normal text-gray-500">
-                    24/7 Support Center
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <SignedOut>
-                  <SignInButton>
-                    <button className="rounded-md bg-green-700 px-4 py-1.5 text-white">
-                      Sign In
-                    </button>
-                  </SignInButton>
-                </SignedOut>
-
-                <SignedIn>
-                  <div data-testid="user-button">
-                    <UserButton />
-                  </div>
-                </SignedIn>
-              </div>
-            </div>
-          </NavbarContent>
-        </Navbar>
-      </div>
-
-      <div className="bg-gray-100 pt-20">
-        <div className="mx-auto max-w-4xl p-6">
-          <h1 className="mb-4 text-3xl font-bold">Welcome to Our Store!</h1>
-          <p className="text-lg text-gray-700">
-            Explore a wide range of categories including groceries, electronics,
-            fashion, and more. Browse through our blog, check out the latest
-            deals, or contact our 24/7 support center.
-          </p>
+    <header className="fixed left-0 top-0 z-50 w-full bg-white shadow-md">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6">
+        <div className="flex items-center gap-4">
+          <button
+            aria-label="Browse all categories"
+            className="group relative z-0 box-border flex h-10 min-w-20 transform-gpu select-none appearance-none items-center justify-center gap-2 overflow-hidden whitespace-nowrap rounded-md bg-green-700 px-4 py-1.5 text-sm font-medium text-white subpixel-antialiased outline-none tap-highlight-transparent hover:bg-green-800 data-[focus-visible=true]:z-10 data-[pressed=true]:scale-[0.97] data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-offset-2 data-[focus-visible=true]:outline-green-700"
+          >
+            Browse All Categories
+            <ChevronDown size={16} />
+          </button>
         </div>
-      </div>
-    </>
+
+        <ul className="hidden gap-6 text-sm font-medium text-gray-900 md:flex">
+          {navItems.map((item, idx) => (
+            <li key={idx}>
+              <Link href="#" className="hover:text-green-700">
+                {item}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <div className="md:hidden">
+          <button
+            aria-label="Toggle mobile menu"
+            onClick={() => setIsMobileOpen(!isMobileOpen)}
+            className="text-gray-700 hover:text-green-700"
+          >
+            {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+
+        <div className="hidden items-center gap-6 md:flex">
+          <div className="flex items-center gap-2 font-semibold text-green-700">
+            <Headphones size={20} />
+            <div className="text-right leading-tight">
+              <div className="text-sm">1900 - 888</div>
+              <div className="text-xs font-normal text-gray-600">
+                24/7 Support Center
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <SignedOut>
+              <SignInButton>
+                <button className="rounded-md bg-green-700 px-4 py-1.5 text-white hover:bg-green-800">
+                  Sign In
+                </button>
+              </SignInButton>
+            </SignedOut>
+
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </div>
+        </div>
+      </nav>
+
+      {isMobileOpen && (
+        <ul className="flex flex-col gap-3 border-t bg-white px-4 pb-4 text-sm font-medium text-gray-900 md:hidden">
+          {navItems.map((item, idx) => (
+            <li key={idx}>
+              <Link href="#" className="block py-1 hover:text-green-700">
+                {item}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </header>
   );
 }
