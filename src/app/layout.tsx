@@ -5,6 +5,8 @@ import { Providers } from "./providers";
 import { Metadata } from "next";
 
 import "./globals.css";
+import Categories from "./categories/page";
+import Home from "./page";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,7 +15,11 @@ export const metadata: Metadata = {
   description: "Demo app using Clerk authentication",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <ClerkProvider
       appearance={{
@@ -31,13 +37,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         },
       }}
       signInUrl="/sign-in"
-      
     >
       <html lang="en">
         <body className={inter.className}>
           <Providers>
-            {children}
-          </Providers>
+            <Categories/>
+            <Home/>
+            </Providers>
         </body>
       </html>
     </ClerkProvider>

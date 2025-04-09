@@ -71,16 +71,14 @@ export default function HomePage() {
               </div>
 
               <div>
-                <SignedOut>
-                  <SignInButton>
-                    <button
-                      className="rounded-md bg-green-700 px-4 py-1.5 text-sm text-white transition hover:bg-green-800"
-                      data-testid="sign-in-btn"
-                    >
-                      Sign In
-                    </button>
-                  </SignInButton>
-                </SignedOut>
+              <SignedOut>
+  <SignInButton >
+    <button className="bg-green-700 px-4 py-1.5 text-white rounded-md">
+      Sign In
+    </button>
+  </SignInButton>
+</SignedOut>
+
 
                 <SignedIn>
                   <div data-testid="user-button">

@@ -14,5 +14,5 @@ export default function RedirectAfterLogin() {
     }
   }, [isSignedIn, router]);
 
-  return <div>Redirecting...</div>; 
+  return <div>Redirecting...</div>;
 }
