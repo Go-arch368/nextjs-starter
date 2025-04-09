@@ -3,8 +3,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Inter } from "next/font/google";
 import { Providers } from "./providers";
 import { Metadata } from "next";
-import Categories from "./categories/page";
-import Home from "./page";
+
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -14,7 +13,7 @@ export const metadata: Metadata = {
   description: "Demo app using Clerk authentication",
 };
 
-export default function RootLayout({}: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider
       appearance={{
@@ -32,13 +31,12 @@ export default function RootLayout({}: { children: React.ReactNode }) {
         },
       }}
       signInUrl="/sign-in"
+      
     >
       <html lang="en">
         <body className={inter.className}>
           <Providers>
-            <Categories />
-            <Home />
-            {/* {children} */}
+            {children}
           </Providers>
         </body>
       </html>
