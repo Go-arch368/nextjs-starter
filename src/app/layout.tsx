@@ -15,11 +15,7 @@ export const metadata: Metadata = {
   description: "Demo app using Clerk authentication",
 };
 
-export default function RootLayout({
-  
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({}: { children: React.ReactNode }) {
   return (
     <ClerkProvider
       appearance={{
@@ -41,9 +37,9 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <Providers>
-            <Categories/>
-            <Home/>
-            </Providers>
+            <Categories />
+            <Home />
+          </Providers>
         </body>
       </html>
     </ClerkProvider>
