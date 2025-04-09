@@ -1,45 +1,108 @@
 "use client";
 
 import { useState } from "react";
-
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { ChevronDown, Headphones, Menu, X } from "lucide-react";
 import Link from "next/link";
 
 export default function Navbar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
+  const [isBrowseOpen, setIsBrowseOpen] = useState(false);
+
+  const browseCategories = [
+    "Vegetables",
+    "Beverages",
+    "Bakery",
+    "Dairy Products",
+    "Snacks",
+  ];
 
   const navItems = [
-    "Home",
-    "Groceries",
-    "Electronics",
-    "Fashion",
-    "About",
-    "Shop",
-    "Blog",
-    "Pages",
-    "Contact",
+    { name: "Home", href: "/" },
+    {
+      name: "Groceries",
+      dropdown: ["Fruits", "Vegetables", "Snacks"],
+    },
+    {
+      name: "Electronics",
+      dropdown: ["Mobiles", "Laptops", "Accessories"],
+    },
+    {
+      name: "Fashion",
+      dropdown: ["Men", "Women", "Kids"],
+    },
+    {
+      name: "Shop",
+      dropdown: ["Offers", "New Arrivals", "Gift Cards"],
+    },
+    {
+      name: "Pages",
+      dropdown: ["About", "FAQ", "Contact"],
+    },
+    { name: "Blog", href: "/blog" },
+    { name: "Contact", href: "/contact" },
   ];
 
   return (
     <header className="fixed left-0 top-0 z-50 w-full bg-white shadow-md">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6">
-        <div className="flex items-center gap-4">
-          <button
-            aria-label="Browse all categories"
-            className="group relative z-0 box-border flex h-10 min-w-20 transform-gpu select-none appearance-none items-center justify-center gap-2 overflow-hidden whitespace-nowrap rounded-md bg-green-700 px-4 py-1.5 text-sm font-medium text-white subpixel-antialiased outline-none tap-highlight-transparent hover:bg-green-800 data-[focus-visible=true]:z-10 data-[pressed=true]:scale-[0.97] data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-offset-2 data-[focus-visible=true]:outline-green-700"
-          >
+        <div
+          className="relative"
+          onMouseEnter={() => setIsBrowseOpen(true)}
+          onMouseLeave={() => setIsBrowseOpen(false)}
+        >
+          <button className="flex items-center gap-2 rounded-md bg-green-700 px-4 py-2 text-sm font-medium text-white hover:bg-green-800">
             Browse All Categories
             <ChevronDown size={16} />
           </button>
+
+          {isBrowseOpen && (
+            <ul className="absolute left-0 top-full z-50 mt-2 w-48 rounded-md border bg-white shadow-lg">
+              {browseCategories.map((cat) => (
+                <li key={cat}>
+                  <Link
+                    href="#"
+                    className="block px-4 py-2 text-sm hover:bg-gray-100"
+                  >
+                    {cat}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
-        <ul className="hidden gap-6 text-sm font-medium text-gray-900 md:flex">
-          {navItems.map((item, idx) => (
-            <li key={idx}>
-              <Link href="#" className="hover:text-green-700">
-                {item}
+        <ul className="relative hidden gap-6 text-sm font-medium text-gray-900 md:flex">
+          {navItems.map((item) => (
+            <li
+              key={item.name}
+              className="relative"
+              onMouseEnter={() => item.dropdown && setHoveredMenu(item.name)}
+              onMouseLeave={() => setHoveredMenu(null)}
+            >
+              <Link
+                href={item.href || "#"}
+                className="flex items-center gap-1 hover:text-green-700"
+              >
+                {item.name}
+                {item.dropdown && <ChevronDown size={14} />}
               </Link>
+
+              {item.dropdown && hoveredMenu === item.name && (
+                <ul className="absolute left-0 top-full z-50 mt-2 w-40 rounded-md border bg-white shadow-lg">
+                  {item.dropdown.map((subItem) => (
+                    <li key={subItem}>
+                      <Link
+                        href="#"
+                        className="block px-4 py-2 text-sm hover:bg-gray-100"
+                      >
+                        {subItem}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </li>
           ))}
         </ul>
@@ -83,13 +146,13 @@ export default function Navbar() {
 
       {isMobileOpen && (
         <ul className="flex flex-col gap-3 border-t bg-white px-4 pb-4 text-sm font-medium text-gray-900 md:hidden">
-          {navItems.map((item, idx) => (
-            <li key={idx}>
-              <Link href="#" className="block py-1 hover:text-green-700">
-                {item}
-              </Link>
-            </li>
-          ))}
+          {[...browseCategories, ...navItems.map((item) => item.name)].map(
+            (item) => (
+              <li key={item}>
+                <Link href="#">{item}</Link>
+              </li>
+            )
+          )}
         </ul>
       )}
     </header>
