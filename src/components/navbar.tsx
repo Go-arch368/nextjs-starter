@@ -9,6 +9,9 @@ export default function Navbar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
   const [isBrowseOpen, setIsBrowseOpen] = useState(false);
+  const [openDropdownMobile, setOpenDropdownMobile] = useState<string | null>(
+    null
+  );
 
   const browseCategories = [
     "Vegetables",
@@ -36,7 +39,7 @@ export default function Navbar() {
     },
     {
       name: "Fashion",
-      dropdown: ["Men Wester wear", "Womens western wear"],
+      dropdown: ["Men Western wear", "Womens western wear"],
     },
     {
       name: "Shop",
@@ -48,7 +51,6 @@ export default function Navbar() {
     },
     {
       name: "About",
-      //dropdown: ["Offers", "New Arrivals", "Gift Cards"],
       href: "/about",
     },
     {
@@ -62,14 +64,14 @@ export default function Navbar() {
   return (
     <header className="fixed left-0 top-0 z-50 w-full bg-white shadow-md">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6">
+        {/* Left: Browse Button */}
         <div
-          className="relative"
+          className="relative hidden md:block"
           onMouseEnter={() => setIsBrowseOpen(true)}
           onMouseLeave={() => setIsBrowseOpen(false)}
         >
           <button className="flex items-center gap-2 rounded-md bg-green-700 px-4 py-2 text-sm font-medium text-white hover:bg-green-800">
-            Browse All Categories
-            <ChevronDown size={16} />
+            Browse All Categories <ChevronDown size={16} />
           </button>
 
           {isBrowseOpen && (
@@ -88,15 +90,13 @@ export default function Navbar() {
           )}
         </div>
 
-        <ul className="relative hidden gap-6 text-sm font-medium text-gray-900 md:flex">
+        {/* Center: Nav Items */}
+        <ul className="hidden gap-6 text-sm font-medium text-gray-900 md:flex">
           {navItems.map((item) => (
             <li
               key={item.name}
               className="relative"
-              onMouseEnter={() =>
-                (item.dropdown || item.nestedDropdown) &&
-                setHoveredMenu(item.name)
-              }
+              onMouseEnter={() => setHoveredMenu(item.name)}
               onMouseLeave={() => setHoveredMenu(null)}
             >
               <Link
@@ -109,16 +109,16 @@ export default function Navbar() {
                 )}
               </Link>
 
-              {/* Simple dropdown */}
+              {/* Dropdowns */}
               {item.dropdown && hoveredMenu === item.name && (
-                <ul className="absolute left-0 top-full z-50 mt-2 w-40 rounded-md border bg-white shadow-lg">
-                  {item.dropdown.map((subItem) => (
-                    <li key={subItem}>
+                <ul className="absolute left-0 top-full z-50 mt-2 w-48 rounded-md border bg-white shadow-lg">
+                  {item.dropdown.map((sub) => (
+                    <li key={sub}>
                       <Link
                         href="#"
                         className="block px-4 py-2 text-sm hover:bg-gray-100"
                       >
-                        {subItem}
+                        {sub}
                       </Link>
                     </li>
                   ))}
@@ -130,7 +130,7 @@ export default function Navbar() {
                   {Object.entries(item.nestedDropdown).map(
                     ([category, subItems]) => (
                       <div key={category} className="w-1/3 px-4">
-                        <div className="mb-2 text-base font-bold text-green-800">
+                        <div className="mb-2 font-bold text-green-800">
                           {category}
                         </div>
                         <ul className="space-y-1">
@@ -138,7 +138,7 @@ export default function Navbar() {
                             <li key={sub}>
                               <Link
                                 href="#"
-                                className="block rounded-md px-3 py-2 text-sm text-gray-700 transition-all hover:bg-green-100 hover:text-green-800"
+                                className="block rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-green-100 hover:text-green-800"
                               >
                                 {sub}
                               </Link>
@@ -154,53 +154,109 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <div className="md:hidden">
-          <button
-            aria-label="Toggle mobile menu"
-            onClick={() => setIsMobileOpen(!isMobileOpen)}
-            className="text-gray-700 hover:text-green-700"
-          >
-            {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-
-        <div className="hidden items-center gap-6 md:flex">
-          <div className="flex items-center gap-2 font-semibold text-green-700">
+        {/* Right: Mobile Menu Button & Auth */}
+        <div className="flex items-center gap-4">
+          <div className="hidden items-center gap-2 font-semibold text-green-700 md:flex">
             <Headphones size={20} />
             <div className="text-right leading-tight">
               <div className="text-sm">1900 - 888</div>
               <div className="text-xs font-normal text-gray-600">
-                24/7 Support Center
+                24/7 Support
               </div>
             </div>
           </div>
 
-          <div>
-            <SignedOut>
-              <SignInButton>
-                <button className="rounded-md bg-green-700 px-4 py-1.5 text-white hover:bg-green-800">
-                  Sign In
-                </button>
-              </SignInButton>
-            </SignedOut>
+          <SignedOut>
+            <SignInButton>
+              <button className="hidden rounded-md bg-green-700 px-4 py-1.5 text-white hover:bg-green-800 md:block">
+                Sign In
+              </button>
+            </SignInButton>
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
 
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-          </div>
+          <button
+            onClick={() => setIsMobileOpen((prev) => !prev)}
+            className="text-gray-700 md:hidden"
+          >
+            {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
       </nav>
 
+      {/* Mobile Drawer */}
       {isMobileOpen && (
-        <ul className="flex flex-col gap-3 border-t bg-white px-4 pb-4 text-sm font-medium text-gray-900 md:hidden">
-          {[...browseCategories, ...navItems.map((item) => item.name)].map(
-            (item) => (
-              <li key={item}>
-                <Link href="#">{item}</Link>
+        <div className="bg-white px-4 pb-4 pt-2 shadow-inner md:hidden">
+          <div className="mb-2 font-semibold text-gray-800">Browse</div>
+          <ul className="mb-4 space-y-2">
+            {browseCategories.map((cat) => (
+              <li key={cat}>
+                <Link href="#" className="block text-sm text-gray-700">
+                  {cat}
+                </Link>
               </li>
-            )
-          )}
-        </ul>
+            ))}
+          </ul>
+
+          <ul className="space-y-2">
+            {navItems.map((item) => (
+              <li key={item.name}>
+                <button
+                  className="flex w-full items-center justify-between text-left text-sm font-medium text-gray-800"
+                  onClick={() =>
+                    setOpenDropdownMobile(
+                      openDropdownMobile === item.name ? null : item.name
+                    )
+                  }
+                >
+                  {item.name}
+                  {(item.dropdown || item.nestedDropdown) && (
+                    <ChevronDown size={16} />
+                  )}
+                </button>
+
+                {/* Dropdown items for mobile */}
+                {(item.dropdown || item.nestedDropdown) &&
+                  openDropdownMobile === item.name && (
+                    <ul className="mt-1 space-y-1 pl-4 text-sm text-gray-600">
+                      {item.dropdown?.map((d) => (
+                        <li key={d}>
+                          <Link href="#" className="block py-1">
+                            {d}
+                          </Link>
+                        </li>
+                      ))}
+
+                      {item.nestedDropdown &&
+                        Object.entries(item.nestedDropdown).map(
+                          ([cat, subs]) => (
+                            <div key={cat} className="mb-2">
+                              <div className="mt-2 font-semibold text-green-700">
+                                {cat}
+                              </div>
+                              <ul className="pl-2">
+                                {subs.map((sub) => (
+                                  <li key={sub}>
+                                    <Link
+                                      href="#"
+                                      className="block py-1 text-gray-700"
+                                    >
+                                      {sub}
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )
+                        )}
+                    </ul>
+                  )}
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
     </header>
   );
