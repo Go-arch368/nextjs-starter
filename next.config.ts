@@ -2,6 +2,7 @@
 import type { NextConfig } from "next";
 
 const runtimeCaching = require("next-pwa/cache");
+
 const withPWA = require("next-pwa")({
   dest: "public",
   register: true,
@@ -11,6 +12,9 @@ const withPWA = require("next-pwa")({
 });
 
 const nextConfig: NextConfig = withPWA({
+  experimental: {
+    legacyBrowsers: false,
+  },
   eslint: {
     dirs: ["src"],
     ignoreDuringBuilds: true,
