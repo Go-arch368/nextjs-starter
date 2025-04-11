@@ -9,9 +9,7 @@ export default function Navbar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
   const [isBrowseOpen, setIsBrowseOpen] = useState(false);
-  const [openDropdownMobile, setOpenDropdownMobile] = useState<string | null>(
-    null
-  );
+  const [openDropdownMobile, setOpenDropdownMobile] = useState<string | null>(null);
 
   const browseCategories = [
     "Vegetables",
@@ -63,147 +61,157 @@ export default function Navbar() {
 
   return (
     <header className="fixed left-0 top-0 z-50 w-full bg-white shadow-md">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6">
-    
-        <div
-          className="relative hidden md:block"
-          onMouseEnter={() => setIsBrowseOpen(true)}
-          onMouseLeave={() => setIsBrowseOpen(false)}
-        >
-          <button className="flex items-center gap-2 rounded-md bg-green-700 px-4 py-2 text-sm font-medium text-white hover:bg-green-800">
-            Browse All Categories <ChevronDown size={16} />
-          </button>
-
-          {isBrowseOpen && (
-            <ul className="absolute left-0 top-full z-50 mt-2 w-48 rounded-md border bg-white shadow-lg">
-              {browseCategories.map((cat) => (
-                <li key={cat}>
-                  <Link
-                    href="#"
-                    className="block px-4 py-2 text-sm hover:bg-gray-100"
-                  >
-                    {cat}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-
-    
-        <ul className="hidden gap-6 text-sm font-medium text-gray-900 md:flex">
-          {navItems.map((item) => (
-            <li
-              key={item.name}
-              className="relative"
-              onMouseEnter={() => setHoveredMenu(item.name)}
-              onMouseLeave={() => setHoveredMenu(null)}
+      <div className="h-16">
+        <nav className="mx-auto flex h-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+          {/* Left section - Mobile menu and Browse Categories */}
+          <div className="flex items-center gap-4">
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setIsMobileOpen((prev) => !prev)}
+              className="p-2 text-gray-700 lg:hidden"
             >
-              <Link
-                href={item.href || "#"}
-                className="flex items-center gap-1 hover:text-green-700"
-              >
-                {item.name}
-                {(item.dropdown || item.nestedDropdown) && (
-                  <ChevronDown size={14} />
-                )}
-              </Link>
+              {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
 
-              {item.dropdown && hoveredMenu === item.name && (
+            {/* Browse Categories - hidden on xs, visible from sm */}
+            <div
+              className="relative hidden sm:block"
+              onMouseEnter={() => setIsBrowseOpen(true)}
+              onMouseLeave={() => setIsBrowseOpen(false)}
+            >
+              <button className="flex items-center gap-2 whitespace-nowrap rounded-md bg-green-700 px-4 py-2 text-sm font-medium text-white hover:bg-green-800">
+                Browse All Categories <ChevronDown size={16} />
+              </button>
+
+              {isBrowseOpen && (
                 <ul className="absolute left-0 top-full z-50 mt-2 w-48 rounded-md border bg-white shadow-lg">
-                  {item.dropdown.map((sub) => (
-                    <li key={sub}>
+                  {browseCategories.map((cat) => (
+                    <li key={cat}>
                       <Link
                         href="#"
                         className="block px-4 py-2 text-sm hover:bg-gray-100"
                       >
-                        {sub}
+                        {cat}
                       </Link>
                     </li>
                   ))}
                 </ul>
               )}
-
-              {item.nestedDropdown && hoveredMenu === item.name && (
-                <div className="absolute left-0 top-full z-50 mt-2 flex w-[700px] rounded-md border bg-white p-4 shadow-lg">
-                  {Object.entries(item.nestedDropdown).map(
-                    ([category, subItems]) => (
-                      <div key={category} className="w-1/3 px-4">
-                        <div className="mb-2 font-bold text-green-800">
-                          {category}
-                        </div>
-                        <ul className="space-y-1">
-                          {subItems.map((sub) => (
-                            <li key={sub}>
-                              <Link
-                                href="#"
-                                className="block rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-green-100 hover:text-green-800"
-                              >
-                                {sub}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )
-                  )}
-                </div>
-              )}
-            </li>
-          ))}
-        </ul>
-
-       
-        <div className="flex items-center gap-4">
-          <div className="hidden items-center gap-2 font-semibold text-green-700 md:flex">
-            <Headphones size={20} />
-            <div className="text-right leading-tight">
-              <div className="text-sm">1900 - 888</div>
-              <div className="text-xs font-normal text-gray-600">
-                24/7 Support
-              </div>
             </div>
           </div>
 
-          <SignedOut>
-            <SignInButton>
-              <button className="hidden rounded-md bg-green-700 px-4 py-1.5 text-white hover:bg-green-800 md:block">
-                Sign In
-              </button>
-            </SignInButton>
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
+          {/* Center section - Main Navigation */}
+          <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-center">
+            <ul className="flex gap-4 text-sm font-medium text-gray-900">
+              {navItems.map((item) => (
+                <li
+                  key={item.name}
+                  className="relative"
+                  onMouseEnter={() => setHoveredMenu(item.name)}
+                  onMouseLeave={() => setHoveredMenu(null)}
+                >
+                  <Link
+                    href={item.href || "#"}
+                    className="flex items-center gap-1 whitespace-nowrap hover:text-green-700"
+                  >
+                    {item.name}
+                    {(item.dropdown || item.nestedDropdown) && (
+                      <ChevronDown size={14} />
+                    )}
+                  </Link>
 
-          <button
-            onClick={() => setIsMobileOpen((prev) => !prev)}
-            className="text-gray-700 md:hidden"
-          >
-            {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-      </nav>
+                  {item.dropdown && hoveredMenu === item.name && (
+                    <ul className="absolute left-0 top-full z-50 mt-2 w-48 rounded-md border bg-white shadow-lg">
+                      {item.dropdown.map((sub) => (
+                        <li key={sub}>
+                          <Link
+                            href="#"
+                            className="block px-4 py-2 text-sm hover:bg-gray-100"
+                          >
+                            {sub}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
 
-      
+                  {item.nestedDropdown && hoveredMenu === item.name && (
+                    <div className="absolute left-1/2 top-full z-50 mt-2 flex w-[700px] -translate-x-1/2 rounded-md border bg-white p-4 shadow-lg">
+                      {Object.entries(item.nestedDropdown).map(
+                        ([category, subItems]) => (
+                          <div key={category} className="w-1/3 px-4">
+                            <div className="mb-2 font-bold text-green-800">
+                              {category}
+                            </div>
+                            <ul className="space-y-1">
+                              {subItems.map((sub) => (
+                                <li key={sub}>
+                                  <Link
+                                    href="#"
+                                    className="block rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-green-100 hover:text-green-800"
+                                  >
+                                    {sub}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Right section - Icons and buttons */}
+          <div className="flex items-center gap-4">
+            {/* Support info - hidden on xs, visible from sm */}
+            <div className="hidden items-center gap-2 font-semibold text-green-700 sm:flex sm:gap-3">
+              <Headphones size={20} />
+              <div className="text-right leading-tight">
+                <div className="text-sm">1900 - 888</div>
+                <div className="text-xs font-normal text-gray-600">
+                  24/7 Support
+                </div>
+              </div>
+            </div>
+
+            {/* Sign in button - hidden on mobile, visible from md */}
+            <SignedOut>
+              <SignInButton>
+                <button className="hidden rounded-md bg-green-700 px-4 py-2 text-sm font-medium text-white hover:bg-green-800 md:block">
+                  Sign In
+                </button>
+              </SignInButton>
+            </SignedOut>
+            <SignedIn>
+              <UserButton afterSignOutUrl="/" />
+            </SignedIn>
+          </div>
+        </nav>
+      </div>
+
+      {/* Mobile menu - shown only on small screens */}
       {isMobileOpen && (
-        <div className="bg-white px-4 pb-4 pt-2 shadow-inner md:hidden">
-          <div className="mb-2 font-semibold text-gray-800">Browse</div>
-          <ul className="mb-4 space-y-2">
+        <div className="bg-white px-6 pb-6 shadow-inner lg:hidden">
+          <div className="mb-3 pt-2 font-semibold text-gray-800">Browse</div>
+          <ul className="mb-6 space-y-3">
             {browseCategories.map((cat) => (
               <li key={cat}>
-                <Link href="#" className="block text-sm text-gray-700">
+                <Link href="#" className="block py-1.5 px-2 rounded text-sm text-gray-700 hover:bg-gray-50">
                   {cat}
                 </Link>
               </li>
             ))}
           </ul>
 
-          <ul className="space-y-2">
+          <ul className="space-y-3">
             {navItems.map((item) => (
               <li key={item.name}>
                 <button
-                  className="flex w-full items-center justify-between text-left text-sm font-medium text-gray-800"
+                  className="flex w-full items-center justify-between rounded px-2 py-2.5 text-left text-sm font-medium text-gray-800 hover:bg-gray-50"
                   onClick={() =>
                     setOpenDropdownMobile(
                       openDropdownMobile === item.name ? null : item.name
@@ -216,13 +224,12 @@ export default function Navbar() {
                   )}
                 </button>
 
-               
                 {(item.dropdown || item.nestedDropdown) &&
                   openDropdownMobile === item.name && (
                     <ul className="mt-1 space-y-1 pl-4 text-sm text-gray-600">
                       {item.dropdown?.map((d) => (
                         <li key={d}>
-                          <Link href="#" className="block py-1">
+                          <Link href="#" className="block rounded px-2 py-2 hover:bg-gray-50">
                             {d}
                           </Link>
                         </li>
@@ -232,7 +239,7 @@ export default function Navbar() {
                         Object.entries(item.nestedDropdown).map(
                           ([cat, subs]) => (
                             <div key={cat} className="mb-2">
-                              <div className="mt-2 font-semibold text-green-700">
+                              <div className="mt-3 mb-1 px-2 font-semibold text-green-700">
                                 {cat}
                               </div>
                               <ul className="pl-2">
@@ -240,7 +247,7 @@ export default function Navbar() {
                                   <li key={sub}>
                                     <Link
                                       href="#"
-                                      className="block py-1 text-gray-700"
+                                      className="block rounded px-2 py-1.5 text-gray-700 hover:bg-gray-50"
                                     >
                                       {sub}
                                     </Link>
