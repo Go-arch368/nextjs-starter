@@ -9,7 +9,9 @@ export default function Navbar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
   const [isBrowseOpen, setIsBrowseOpen] = useState(false);
-  const [openDropdownMobile, setOpenDropdownMobile] = useState<string | null>(null);
+  const [openDropdownMobile, setOpenDropdownMobile] = useState<string | null>(
+    null
+  );
 
   const browseCategories = [
     "Vegetables",
@@ -200,7 +202,10 @@ export default function Navbar() {
           <ul className="mb-6 space-y-3">
             {browseCategories.map((cat) => (
               <li key={cat}>
-                <Link href="#" className="block py-1.5 px-2 rounded text-sm text-gray-700 hover:bg-gray-50">
+                <Link
+                  href="#"
+                  className="block rounded px-2 py-1.5 text-sm text-gray-700 hover:bg-gray-50"
+                >
                   {cat}
                 </Link>
               </li>
@@ -229,7 +234,10 @@ export default function Navbar() {
                     <ul className="mt-1 space-y-1 pl-4 text-sm text-gray-600">
                       {item.dropdown?.map((d) => (
                         <li key={d}>
-                          <Link href="#" className="block rounded px-2 py-2 hover:bg-gray-50">
+                          <Link
+                            href="#"
+                            className="block rounded px-2 py-2 hover:bg-gray-50"
+                          >
                             {d}
                           </Link>
                         </li>
@@ -239,7 +247,7 @@ export default function Navbar() {
                         Object.entries(item.nestedDropdown).map(
                           ([cat, subs]) => (
                             <div key={cat} className="mb-2">
-                              <div className="mt-3 mb-1 px-2 font-semibold text-green-700">
+                              <div className="mb-1 mt-3 px-2 font-semibold text-green-700">
                                 {cat}
                               </div>
                               <ul className="pl-2">
