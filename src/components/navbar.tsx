@@ -75,7 +75,6 @@ export default function Navbar() {
               {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
 
-            {/* Browse Categories - hidden on xs, visible from sm */}
             <div
               className="relative hidden sm:block"
               onMouseEnter={() => setIsBrowseOpen(true)}
@@ -102,7 +101,6 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Center section - Main Navigation */}
           <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-center">
             <ul className="flex gap-4 text-sm font-medium text-gray-900">
               {navItems.map((item) => (
@@ -167,9 +165,7 @@ export default function Navbar() {
             </ul>
           </div>
 
-          {/* Right section - Icons and buttons */}
           <div className="flex items-center gap-4">
-            {/* Support info - hidden on xs, visible from sm */}
             <div className="hidden items-center gap-2 font-semibold text-green-700 sm:flex sm:gap-3">
               <Headphones size={20} />
               <div className="text-right leading-tight">
@@ -180,7 +176,6 @@ export default function Navbar() {
               </div>
             </div>
 
-            {/* Sign in button - hidden on mobile, visible from md */}
             <SignedOut>
               <SignInButton>
                 <button className="hidden rounded-md bg-green-700 px-4 py-2 text-sm font-medium text-white hover:bg-green-800 md:block">
@@ -195,7 +190,6 @@ export default function Navbar() {
         </nav>
       </div>
 
-      {/* Mobile menu - shown only on small screens */}
       {isMobileOpen && (
         <div className="bg-white px-6 pb-6 shadow-inner lg:hidden">
           <div className="mb-3 pt-2 font-semibold text-gray-800">Browse</div>
