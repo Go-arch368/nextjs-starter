@@ -57,7 +57,7 @@ export default function Navbar() {
       name: "Pages",
       dropdown: ["About", "FAQ", "Contact"],
     },
-    // { name: "Blog", href: "/" },
+    { name: "Blog", href: "/" },
     { name: "Contact", href: "/contact" },
   ];
 
@@ -175,11 +175,11 @@ export default function Navbar() {
             </div>
 
             <SignedOut>
-              <SignInButton>
-                {/* <button className="hidden rounded-md bg-green-700 px-4 py-2 text-sm font-medium text-white hover:bg-green-800 md:block">
+              {/* <SignInButton>
+                <button className="hidden rounded-md bg-green-700 px-4 py-2 text-sm font-medium text-white hover:bg-green-800 md:block">
                   Sign In
-                </button> */}
-              </SignInButton>
+                </button>
+              </SignInButton> */}
             </SignedOut>
             <SignedIn>
               <UserButton afterSignOutUrl="/" />
