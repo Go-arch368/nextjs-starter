@@ -1,6 +1,5 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-
 const isPublicRoute = createRouteMatcher(["/sign-in(.*)", "/sign-up(.*)"]);
 
 export default clerkMiddleware(
@@ -12,10 +11,9 @@ export default clerkMiddleware(
   {
     afterSignInUrl: "/categories", // optional default if redirectUrl not given
     afterSignUpUrl: "/categories",
-
   }
 );
 
 export const config = {
   matcher: ["/((?!_next|.*\\..*).*)"], // Matches everything except static files
-}
+};
