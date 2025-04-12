@@ -57,7 +57,7 @@ export default function Navbar() {
       name: "Pages",
       dropdown: ["About", "FAQ", "Contact"],
     },
-    { name: "Blog", href: "/blog" },
+    { name: "Blog", href: "/" },
     { name: "Contact", href: "/contact" },
   ];
 
