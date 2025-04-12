@@ -175,14 +175,14 @@ export default function Navbar() {
             </div>
 
             <SignedOut>
-              {/* <SignInButton>
+              <SignInButton>
                 <button className="hidden rounded-md bg-green-700 px-4 py-2 text-sm font-medium text-white hover:bg-green-800 md:block">
-                  Sign In
+                 
                 </button>
-              </SignInButton> */}
+              </SignInButton>
             </SignedOut>
             <SignedIn>
-              <UserButton afterSignOutUrl="/" />
+              <UserButton />
             </SignedIn>
           </div>
         </nav>
