@@ -176,9 +176,7 @@ export default function Navbar() {
 
             <SignedOut>
               <SignInButton>
-                <button className="hidden rounded-md bg-green-700 px-4 py-2 text-sm font-medium text-white hover:bg-green-800 md:block">
-                 
-                </button>
+                <button className="hidden rounded-md bg-green-700 px-4 py-2 text-sm font-medium text-white hover:bg-green-800 md:block"></button>
               </SignInButton>
             </SignedOut>
             <SignedIn>
