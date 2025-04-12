@@ -1,3 +1,3 @@
-export default function Page({ params }: { params: { slug: string } }) {
-  return <div>{params.slug}</div>;
+export default function BlogPage() {
+  return <div>This is the blog page</div>;
 }
