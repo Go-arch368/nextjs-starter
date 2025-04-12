@@ -1,34 +1,21 @@
-// src/middleware.ts
-import { clerkMiddleware } from "@clerk/nextjs/server";
-import { NextResponse } from "next/server";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-export default clerkMiddleware(async (auth, req) => {
-  const publicRoutes = [
-    "/",
-    "/sign-in",
-    "/sign-up",
-    "/categories",
-    "/categories/(.*)",
-    "/api/(.*)",
-  ];
 
-  if (publicRoutes.some((path) => req.nextUrl.pathname.startsWith(path))) {
-    return NextResponse.next();
+const isPublicRoute = createRouteMatcher(["/sign-in(.*)", "/sign-up(.*)"]);
+
+export default clerkMiddleware(
+  async (auth, req) => {
+    if (!isPublicRoute(req)) {
+      await auth.protect();
+    }
+  },
+  {
+    afterSignInUrl: "/categories", // optional default if redirectUrl not given
+    afterSignUpUrl: "/categories",
+
   }
-
-  const authState = await auth();
-
-  if (!authState.userId) {
-    const signInUrl = new URL("/sign-in", req.url);
-    signInUrl.searchParams.set("redirect_url", req.nextUrl.pathname);
-    return NextResponse.redirect(signInUrl);
-  }
-
-  return NextResponse.next();
-});
+);
 
 export const config = {
-  matcher: [
-    "/((?!api|_next|v1|favicon.ico|.*\\.(?:ico|png|jpg|jpeg|svg|css|js|woff2?)$).*)",
-  ],
-};
+  matcher: ["/((?!_next|.*\\..*).*)"], // Matches everything except static files
+}
