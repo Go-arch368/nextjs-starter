@@ -65,9 +65,7 @@ export default function Navbar() {
     <header className="fixed left-0 top-0 z-50 w-full bg-white shadow-md">
       <div className="h-16">
         <nav className="mx-auto flex h-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          {/* Left section - Mobile menu and Browse Categories */}
           <div className="flex items-center gap-4">
-            {/* Mobile menu button */}
             <button
               onClick={() => setIsMobileOpen((prev) => !prev)}
               className="p-2 text-gray-700 lg:hidden"

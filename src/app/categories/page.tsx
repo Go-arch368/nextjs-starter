@@ -1,6 +1,6 @@
 // src/app/categories/page.tsx
 import React from "react";
-import HomePage from "@/components/navbar"; // Assuming you have a HomePage component
+import HomePage from "@/components/navbar";
 
 const Categories = () => (
   <div>
